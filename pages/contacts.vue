@@ -20,7 +20,13 @@
                   <tr v-for="contact in contacts[0]" :key="contact.email">
                     <td>{{ contact.fullName }}</td>
                     <td>{{ contact.email }}</td>
-                    <td>1.1</td>
+                    <td>
+                      <b-button
+                        class="btn btn-sm btn-info"
+                        @click="selectedSeat.contact = contact.email"
+                        >Assign Seat</b-button
+                      >
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -44,6 +50,14 @@
         @toggle-contact-form-visibility="toggleNewContactFormVisibility"
         @get-user-contacts="getUserContacts"
       />
+      <b-row v-for="row in userRoom.rows" :key="row" class="mt-2">
+        row #{{ row }}
+        <b-col v-for="col in userRoom.cols" :key="col">
+          <Seat :seat="selectedSeat" />
+          <span @click="assignSeat(row, col)">select</span>
+          col #{{ col }} {{ selectedSeat.row }}
+        </b-col>
+      </b-row>
     </div>
   </div>
 </template>
@@ -52,37 +66,55 @@
 import { mapGetters, mapMutations } from 'vuex'
 import NavBar from '@/components/NavBar'
 import NewContact from '@/components/NewContact'
+import Seat from '@/components/Seat'
 export default {
   middleware: 'auth',
-  components: { NewContact, NavBar },
+  components: { NewContact, NavBar, Seat },
   layout: 'empty',
   data() {
     return {
       contactListVisible: true,
       newContactFormVisible: false,
+      selectedSeat: {
+        row: Number,
+        col: Number,
+        contact: '',
+        isActive: true,
+      },
     }
   },
   computed: {
     ...mapGetters({
-      contacts: 'contacts/contacts/userContacts',
       loggedInUser: 'loggedInUser',
+      contacts: 'contacts/contacts/userContacts',
+      userRoom: 'seats/settings/userRoom',
     }),
   },
   created() {
-    this.getUserContacts(this.loggedInUser.id)
-    // this.getAllContacts()
+    const userId = this.loggedInUser.id
+    this.getUserContacts(userId)
+    this.getUserRoom(userId)
   },
   methods: {
     toggleNewContactFormVisibility() {
       this.contactListVisible = !this.contactListVisible
       this.newContactFormVisible = !this.newContactFormVisible
     },
+    assignSeat(row, col) {
+      this.selectedSeat.row = row
+      this.selectedSeat.col = col
+    },
     ...mapMutations({
       setUserContacts: 'contacts/contacts/setUserContacts',
       getAllContacts: 'contacts/contacts/setContact',
+      getUserRoom: 'seats/settings/setUserRoom',
+      addRow: 'seats/settings/addRow',
     }),
     getUserContacts() {
       this.setUserContacts(this.loggedInUser.id)
+    },
+    addRoomRow() {
+      this.addRow(this.loggedInUser.id)
     },
   },
 }
