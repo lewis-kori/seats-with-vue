@@ -1,12 +1,5 @@
 <template>
   <div>
-    <b-row v-if="seat.isSactive">
-      <b-col class="text-center">
-        <span
-          >you've selected row #{{ seat.row }} and col #{{ seat.col }}}</span
-        >
-      </b-col>
-    </b-row>
     <div
       :class="[{ occupied: seat.contact, selected: seat.isSactive }, 'empty']"
     ></div>

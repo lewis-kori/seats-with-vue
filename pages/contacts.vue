@@ -50,12 +50,25 @@
         @toggle-contact-form-visibility="toggleNewContactFormVisibility"
         @get-user-contacts="getUserContacts"
       />
+      <b-row v-if="!selectedSeat.isSactive">
+        <b-col class="text-center">
+          <span
+            >you've selected row #{{ selectedSeat.row }} and col #{{
+              selectedSeat.col
+            }}</span
+          >
+        </b-col>
+      </b-row>
       <b-row v-for="row in userRoom.rows" :key="row" class="mt-2">
         row #{{ row }}
         <b-col v-for="col in userRoom.cols" :key="col">
-          <Seat :seat="selectedSeat" />
+          <Seat
+            v-if="row === selectedSeat.row && col === selectedSeat.col"
+            :seat="selectedSeat"
+          />
+          <Seat v-else />
           <span @click="assignSeat(row, col)">select</span>
-          col #{{ col }} {{ selectedSeat.row }}
+          col #{{ col }}
         </b-col>
       </b-row>
     </div>
@@ -79,7 +92,7 @@ export default {
         row: Number,
         col: Number,
         contact: '',
-        isActive: true,
+        isActive: false,
       },
     }
   },
@@ -103,6 +116,7 @@ export default {
     assignSeat(row, col) {
       this.selectedSeat.row = row
       this.selectedSeat.col = col
+      this.selectedSeat.isActive = true
     },
     ...mapMutations({
       setUserContacts: 'contacts/contacts/setUserContacts',
