@@ -4,18 +4,27 @@
     <div class="container">
       <!-- contact list section -->
       <div v-if="contactListVisible">
-        <b-row class="mt-2 mb-3">
-          <b-col>Full Name</b-col>
-          <b-col>{{ contacts }} m</b-col>
-          <b-col>Email</b-col>
-          <b-col>Seat Number</b-col>
-        </b-row>
         <!-- display when member has contacts -->
-        <div v-if="!contactListVisible">
-          <b-row v-for="contact in contacts" :key="contact.email">
-            <b-col>{{ contact.fullName }}</b-col>
-            <b-col>{{ contact.email }}</b-col>
-            <b-col>{{ contact.seatNumber }}</b-col>
+        <div v-if="contactListVisible && contacts.length > 0">
+          <b-row>
+            <b-col>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Seat</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="contact in contacts[0]" :key="contact.email">
+                    <td>{{ contact.fullName }}</td>
+                    <td>{{ contact.email }}</td>
+                    <td>1.1</td>
+                  </tr>
+                </tbody>
+              </table>
+            </b-col>
           </b-row>
         </div>
 
@@ -54,14 +63,13 @@ export default {
   },
   computed: {
     ...mapGetters({
-      userContacts: 'contacts/contacts/userContacts',
-      contacts: 'contacts/contacts/contacts',
+      contacts: 'contacts/contacts/userContacts',
       loggedInUser: 'loggedInUser',
     }),
   },
   created() {
-    // this.getUserContacts(this.loggedInUser.id)
-    this.getAllContacts()
+    this.getUserContacts(this.loggedInUser.id)
+    // this.getAllContacts()
   },
   methods: {
     toggleNewContactFormVisibility() {

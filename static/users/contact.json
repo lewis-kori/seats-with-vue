@@ -5,6 +5,10 @@
         {
           "firstName": "hello world",
           "email": "jane@doe.com"
+        },
+        {
+          "firstName": "hello world",
+          "email": "jane@doe.com"
         }
       ]
     },
