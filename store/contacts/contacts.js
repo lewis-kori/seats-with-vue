@@ -4,22 +4,24 @@ export const state = () => ({
 })
 
 export const mutations = {
-  setContact(state, payload, currentUserId) {
-    console.log('don', currentUserId)
-    console.log('payload', payload)
+  setContact(state, payload) {
     if (payload) {
+      // extract user id
+      const userId = payload.userId
+      // extract data object
+      const data = payload.data
       if (state.allContacts.length > 0) {
-        const userContact = state.allContacts[0].userId['1']
+        const userContact = state.allContacts[0].userId[userId]
         if (userContact) {
-          state.allContacts[0].userId['1'].push(payload)
+          state.allContacts[0].userId[userId].push(data)
         }
       } else {
-        const userIdKey = { '1': [] }
+        const userIdKey = { userIdString: [] }
         state.allContacts.push({ userId: userIdKey })
 
-        state.allContacts[0].userId['1'] = []
-        const user = state.allContacts[0].userId['1']
-        user.push(payload)
+        state.allContacts[0].userId[userId] = []
+        const user = state.allContacts[0].userId[userId]
+        user.push(data)
       }
     }
   },

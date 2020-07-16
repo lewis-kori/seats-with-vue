@@ -53,6 +53,7 @@ import { mapGetters, mapMutations } from 'vuex'
 import NavBar from '@/components/NavBar'
 import NewContact from '@/components/NewContact'
 export default {
+  middleware: 'auth',
   components: { NewContact, NavBar },
   layout: 'empty',
   data() {

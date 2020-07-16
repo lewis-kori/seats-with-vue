@@ -62,11 +62,7 @@ export default {
   methods: {
     ...mapMutations({ setContact: 'contacts/contacts/setContact' }),
     completeContactCreation() {
-      // const userIdKey = `{"${this.userId}" : ${JSON.stringify(this.form)}}`
-      // const useridString = `"${this.userId}"`
-      // const newContact = JSON.parse(userIdKey)
-      // const newContact = { userId: JSON.parse(userIdKey) }
-      this.setContact(this.form, '1')
+      this.setContact({ data: this.form, userId: this.userId })
       this.$emit('get-user-contacts')
       this.$emit('toggle-contact-form-visibility')
     },
