@@ -6,11 +6,12 @@
       <div v-if="contactListVisible">
         <b-row class="mt-2 mb-3">
           <b-col>Full Name</b-col>
+          <b-col>{{ contacts }} m</b-col>
           <b-col>Email</b-col>
           <b-col>Seat Number</b-col>
         </b-row>
         <!-- display when member has contacts -->
-        <div v-if="contacts">
+        <div v-if="!contactListVisible">
           <b-row v-for="contact in contacts" :key="contact.email">
             <b-col>{{ contact.fullName }}</b-col>
             <b-col>{{ contact.email }}</b-col>
@@ -32,13 +33,14 @@
         v-else-if="newContactFormVisible"
         :user-id="loggedInUser.id"
         @toggle-contact-form-visibility="toggleNewContactFormVisibility"
+        @get-user-contacts="getUserContacts"
       />
     </div>
   </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapGetters, mapMutations } from 'vuex'
 import NavBar from '@/components/NavBar'
 import NewContact from '@/components/NewContact'
 export default {
@@ -51,19 +53,27 @@ export default {
     }
   },
   computed: {
-    ...mapGetters([
-      { contacts: 'contacts/contacts/userContacts' },
-      'loggedInUser',
-    ]),
+    ...mapGetters({
+      userContacts: 'contacts/contacts/userContacts',
+      contacts: 'contacts/contacts/contacts',
+      loggedInUser: 'loggedInUser',
+    }),
   },
   created() {
-    // console.log(typeof this.userContacts)
-    // this.contacts(this.loggedInUser.id)
+    // this.getUserContacts(this.loggedInUser.id)
+    this.getAllContacts()
   },
   methods: {
     toggleNewContactFormVisibility() {
       this.contactListVisible = !this.contactListVisible
       this.newContactFormVisible = !this.newContactFormVisible
+    },
+    ...mapMutations({
+      setUserContacts: 'contacts/contacts/setUserContacts',
+      getAllContacts: 'contacts/contacts/setContact',
+    }),
+    getUserContacts() {
+      this.setUserContacts(this.loggedInUser.id)
     },
   },
 }

@@ -1,20 +1,21 @@
 export const state = () => ({
-  contacts: [],
+  allContacts: [],
+  userContacts: [],
 })
 
 export const mutations = {
-  setContact(state, payload, userId) {
-    state.contacts.push(payload)
+  setContact(state, payload) {
+    if (payload) {
+      state.allContacts.push(payload)
+    }
+  },
+  setUserContacts(state, userId) {
+    const userContacts = (state.allContacts.userId = userId)
+    state.userContacts.push(userContacts)
   },
 }
 
 export const getters = {
-  userContacts: (state) => (userId) => {
-    const userContacts = state.contacts[userId]
-    if (userContacts) {
-      return state.contacts[userId]
-    } else {
-      return []
-    }
-  },
+  userContacts: (state) => state.userContacts,
+  contacts: (state) => state.allContacts,
 }
