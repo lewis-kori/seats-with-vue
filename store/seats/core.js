@@ -4,37 +4,47 @@ export const state = () => ({
 })
 
 export const mutations = {
-  setContact(state, payload) {
+  setSeat(state, payload) {
     if (payload) {
       // extract user id
       const userId = payload.userId
+      const contactEmail = payload.contact
+
       // extract data object
       const data = payload.data
-      if (state.allContacts.length > 0) {
-        const userContact = state.allContacts[0].userId[userId]
-        if (userContact) {
-          state.allContacts[0].userId[userId].push(data)
+
+      // parse the seat's json
+      const contactSeat = JSON.parse(
+        `{"${contactEmail}" : { "row":${data.row}, "col": ${data.row}}}`
+      )
+      if (state.allSeats.length > 0) {
+        const userSeat = state.allSeats[0].userId[userId]
+        if (userSeat) {
+          // create the new seat for contact
+
+          state.allSeats[0].userId[userId].push({ contact: contactSeat })
         }
       } else {
         const userIdKey = { userIdString: [] }
-        state.allContacts.push({ userId: userIdKey })
+        state.allSeats.push({ userId: userIdKey })
 
-        state.allContacts[0].userId[userId] = []
-        const user = state.allContacts[0].userId[userId]
-        user.push(data)
+        state.allSeats[0].userId[userId] = []
+        const user = state.allSeats[0].userId[userId]
+
+        user.push({ contact: contactSeat })
       }
     }
   },
-  setUserContacts(state, userId) {
-    if (state.allContacts.length > 0) {
-      const userContacts = state.allContacts[0].userId[userId]
-      state.userContacts.push(userContacts)
+  setUserSeats(state, userId) {
+    if (state.allSeats.length > 0) {
+      const userSeats = state.allSeats[0].userId[userId]
+      state.userSeats.push(userSeats)
     }
     return []
   },
 }
 
 export const getters = {
-  userContacts: (state) => state.userContacts,
-  contacts: (state) => state.allContacts,
+  userSeats: (state) => state.userSeats,
+  seats: (state) => state.allSeats,
 }

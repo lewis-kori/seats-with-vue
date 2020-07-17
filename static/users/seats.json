@@ -3,14 +3,16 @@
     "userId": {
       "1": [
         {
-          "row": 0,
-          "col": 1,
-          "contact": "vee@gmail.com"
+          "vee@gmail.com": {
+            "row": 0,
+            "col": 1
+          }
         },
         {
-          "row": 0,
-          "col": 2,
-          "contact": "korikihiu@gmail.com"
+          "korikihiu@gmail.com": {
+            "row": 0,
+            "col": 2
+          }
         }
       ],
       "2": [

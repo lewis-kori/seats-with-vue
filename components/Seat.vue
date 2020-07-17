@@ -1,7 +1,13 @@
 <template>
   <div>
     <div
-      :class="[{ occupied: seat.contact, selected: seat.isSactive }, 'empty']"
+      :class="[
+        {
+          selected: seat.isActive && seat.contact,
+          occupied: !seat.isActive && seat.contact,
+        },
+        'empty',
+      ]"
     ></div>
   </div>
 </template>
