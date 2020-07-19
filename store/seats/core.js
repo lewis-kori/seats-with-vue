@@ -38,9 +38,9 @@ export const mutations = {
   setUserSeats(state, userId) {
     if (state.allSeats.length > 0) {
       const userSeats = state.allSeats[0].userId[userId]
+      console.log('user is', userSeats)
       state.userSeats.push(userSeats)
     }
-    return []
   },
 }
 
