@@ -24,15 +24,26 @@
 
                       <!-- display if the user has seats -->
                       <div v-if="userSeats.length > 0">
-                        <div v-for="seat in userSeats[0]" :key="seat.contact">
-                          <span v-if="Boolean(seat.contact[contact.email])">
-                            <td>
-                              {{ seat.contact[contact.email].row }}:{{
-                                seat.contact[contact.email].col
+                        <div
+                          v-for="seat in userSeats[0]"
+                          :key="seat[contact.email]"
+                        >
+                          <span>
+                            <td v-if="Boolean(seat[contact.email])">
+                              {{ seat[contact.email].row }}:{{
+                                seat[contact.email].col
                               }}
                             </td>
+                            <td v-else>hello</td>
+                            <!-- <td v-else>
+                              <b-button
+                                class="btn btn-sm btn-info"
+                                @click="selectedSeat.contact = contact.email"
+                                >Assign Seats</b-button
+                              >
+                            </td> -->
                           </span>
-                          <span v-else
+                          <!-- <span v-else
                             ><td>
                               <b-button
                                 class="btn btn-sm btn-info"
@@ -40,7 +51,7 @@
                                 >Assign Seats</b-button
                               >
                             </td></span
-                          >
+                          > -->
                         </div>
                       </div>
                       <td v-else>

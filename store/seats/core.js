@@ -22,7 +22,7 @@ export const mutations = {
         if (userSeat) {
           // create the new seat for contact
 
-          state.allSeats[0].userId[userId].push({ contact: contactSeat })
+          state.allSeats[0].userId[userId].push(contactSeat)
         }
       } else {
         const userIdKey = { userIdString: [] }
@@ -31,14 +31,13 @@ export const mutations = {
         state.allSeats[0].userId[userId] = []
         const user = state.allSeats[0].userId[userId]
 
-        user.push({ contact: contactSeat })
+        user.push(contactSeat)
       }
     }
   },
   setUserSeats(state, userId) {
     if (state.allSeats.length > 0) {
       const userSeats = state.allSeats[0].userId[userId]
-      console.log('user is', userSeats)
       state.userSeats.push(userSeats)
     }
   },
