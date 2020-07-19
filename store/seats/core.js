@@ -15,23 +15,24 @@ export const mutations = {
 
       // parse the seat's json
       const contactSeat = JSON.parse(
-        `{"${contactEmail}" : { "row":${data.row}, "col": ${data.row}}}`
+        `{"${contactEmail}" : { "row":${data.row}, "col": ${data.col}}}`
       )
       if (state.allSeats.length > 0) {
         const userSeat = state.allSeats[0].userId[userId]
         if (userSeat) {
           // create the new seat for contact
-
           state.allSeats[0].userId[userId].push(contactSeat)
+          this.$toast.success('Seat has been assigned successfully.')
         }
       } else {
-        const userIdKey = { userIdString: [] }
-        state.allSeats.push({ userId: userIdKey })
+        const userIdKey = JSON.parse(`{ "userId": [] }`)
+        state.allSeats.push(userIdKey)
 
         state.allSeats[0].userId[userId] = []
         const user = state.allSeats[0].userId[userId]
 
         user.push(contactSeat)
+        this.$toast.success('Seat has been assigned successfully.')
       }
     }
   },

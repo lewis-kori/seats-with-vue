@@ -22,12 +22,6 @@ export default {
         return { row: 1, col: 1, contact: '', isActive: false }
       },
     },
-    isSactive: {
-      type: Boolean,
-      default() {
-        return false
-      },
-    },
   },
 }
 </script>

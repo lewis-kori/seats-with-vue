@@ -1,6 +1,14 @@
 <template>
   <div>
-    <NavBar @toggle-contact-form-visibility="toggleNewContactFormVisibility" />
+    <NavBar
+      v-if="newContactFormVisible"
+      :text="'Close'"
+      @toggle-contact-form-visibility="toggleNewContactFormVisibility"
+    />
+    <NavBar
+      v-else
+      @toggle-contact-form-visibility="toggleNewContactFormVisibility"
+    />
     <div class="container">
       <!-- contact list section -->
       <div v-if="contactListVisible">
@@ -34,24 +42,7 @@
                                 seat[contact.email].col
                               }}
                             </td>
-                            <td v-else>hello</td>
-                            <!-- <td v-else>
-                              <b-button
-                                class="btn btn-sm btn-info"
-                                @click="selectedSeat.contact = contact.email"
-                                >Assign Seats</b-button
-                              >
-                            </td> -->
                           </span>
-                          <!-- <span v-else
-                            ><td>
-                              <b-button
-                                class="btn btn-sm btn-info"
-                                @click="selectedSeat.contact = contact.email"
-                                >Assign Seats</b-button
-                              >
-                            </td></span
-                          > -->
                         </div>
                       </div>
                       <td v-else>
@@ -84,6 +75,7 @@
         :user-id="loggedInUser.id"
         @toggle-contact-form-visibility="toggleNewContactFormVisibility"
         @get-user-contacts="getUserContacts"
+        @attach-contact-to-seat="attachContactToSeat"
       />
 
       <!-- display when user has selected a contact to assign a seat -->
@@ -101,7 +93,7 @@
           </b-col>
         </b-row>
         <!-- display this when user has contacts and has selected a seat -->
-        <b-row v-if="selectedSeat.isActive && contacts.length > 0">
+        <b-row v-if="selectedSeat.isActive">
           <b-col class="text-center">
             <span
               >you've selected row #{{ selectedSeat.row }} and col #{{
@@ -111,7 +103,7 @@
             >
           </b-col>
         </b-row>
-        <div v-if="contacts.length > 0">
+        <div v-if="contacts.length >= 0 && userSeats.length === 0">
           <b-row v-for="row in userRoom.rows" :key="row" class="mt-2">
             row #{{ row }}
             <b-col v-for="col in userRoom.cols" :key="col">
@@ -120,35 +112,94 @@
                 :seat="selectedSeat"
               />
               <Seat v-else />
-              <span @click="assignSeat(row, col)">select</span>
+              <b-badge variant="secondary" @click="assignSeat(row, col)"
+                >select</b-badge
+              >
               col #{{ col }}
             </b-col>
           </b-row>
         </div>
-        <!-- <div v-else>
+
+        <div v-else-if="contacts.length >= 0 && userSeats.length > 0">
           <b-row v-for="row in userRoom.rows" :key="row" class="mt-2">
             row #{{ row }}
             <b-col v-for="col in userRoom.cols" :key="col">
-              <div v-for="seat in userSeats[0]" :key="seat.contact">
-                <div v-for="contact in contacts[0]" :key="contact.email">
-                  {{ typeof seat.contact }} {{ seat.contact }}
-                  <Seat
-                    v-if="
-                      row === seat.contact[contact.email].row &&
-                      col === seat.contact[contact.email].col
-                    "
-                    :seat="{
-                      row: seat.contact[contact.email].row,
-                      col: seat.contact[contact.email].row,
-                      isOccupied: true,
-                    }"
-                  />
-                  <Seat v-else />
+              <div
+                v-if="
+                  !occupiedSeats.some(
+                    (seat) => seat.row === row && seat.col === col
+                  )
+                "
+              >
+                <div
+                  v-if="row === selectedSeat.row && col === selectedSeat.col"
+                >
+                  <Seat :seat="selectedSeat" :text="'hello'" />
+                </div>
+
+                <div v-else>
+                  <Seat />
+                  <b-badge variant="secondary" @click="assignSeat(row, col)"
+                    >select</b-badge
+                  >
+                  col #{{ col }}
+                </div>
+              </div>
+
+              <div v-for="(seat, index) in userSeats[0]" :key="index">
+                <!-- removes duplication of seats in subsequent iteration -->
+                <span v-if="!coveredSeats.includes(seat)">{{
+                  coveredSeats.push(seat)
+                }}</span>
+                <div
+                  v-if="coveredSeats.length >= 0 || coveredSeats.includes(seat)"
+                >
+                  <div v-for="contact in contacts[0]" :key="contact.email">
+                    <!-- removes duplication of contacts in subsequent seat iteration -->
+                    <span v-if="!coveredContacts.includes(contact.email)">{{
+                      coveredContacts.push(contact.email)
+                    }}</span>
+                    <div
+                      v-if="
+                        Boolean(seat[contact.email]) &&
+                        coveredContacts.includes(contact.email)
+                      "
+                    >
+                      <div
+                        v-if="
+                          row === seat[contact.email].row &&
+                          col === seat[contact.email].col
+                        "
+                      >
+                        <span v-show="false">{{
+                          occupiedSeats.push({
+                            row: seat[contact.email].row,
+                            col: seat[contact.email].col,
+                          })
+                        }}</span>
+                        <Seat
+                          :seat="{
+                            row: seat[contact.email].row,
+                            col: seat[contact.email].row,
+                            contact: contact.email,
+                          }"
+                        />
+                        col #{{ col }}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </b-col>
           </b-row>
-        </div> -->
+          <b-row class="mt-3 mb-4 text-center">
+            <b-col class="m-auto">
+              <b-button class="btn btn-lg btn-info" @click="addRow"
+                >Add Row</b-button
+              >
+            </b-col>
+          </b-row>
+        </div>
       </div>
     </div>
   </div>
@@ -167,6 +218,9 @@ export default {
     return {
       contactListVisible: true,
       newContactFormVisible: false,
+      coveredContacts: [],
+      coveredSeats: [],
+      occupiedSeats: [],
       selectedSeat: {
         row: Number,
         col: Number,
@@ -193,6 +247,9 @@ export default {
     toggleNewContactFormVisibility() {
       this.contactListVisible = !this.contactListVisible
       this.newContactFormVisible = !this.newContactFormVisible
+    },
+    attachContactToSeat(contact) {
+      this.selectedSeat.contact = contact
     },
     assignSeat(row, col) {
       this.selectedSeat.row = row

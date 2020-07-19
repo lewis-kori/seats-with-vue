@@ -1,6 +1,12 @@
 # PAGES
 
-This directory contains your Application Views and Routes.
-The framework reads all the `*.vue` files inside this directory and creates the router of your application.
+## index
 
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/guide/routing).
+the app's landing page. Just a log in form.
+User accounts are in the static/users/users.json folder as there's no backend.
+
+## contacts
+
+list of all user's contacts.
+Currently the contacts disappear as I'm not persisting state to local storage.
+But this would be an ideal situation.

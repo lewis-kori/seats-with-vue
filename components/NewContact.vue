@@ -1,5 +1,19 @@
 <template>
   <div class="mt-2 mb-3">
+    <b-row class="mb-4">
+      <b-col>
+        <b-button
+          class="btn btn-sm btn-info float-left"
+          @click="hideContactForm"
+          >Close</b-button
+        >
+        <b-button
+          class="btn btn-sm btn-info float-right"
+          @click="completeContactCreation"
+          >Submit</b-button
+        >
+      </b-col>
+    </b-row>
     <b-form method="post" @submit.prevent="completeContactCreation">
       <b-row>
         <b-col>
@@ -32,7 +46,13 @@
       </b-row>
       <b-row class="text-center">
         <b-col>
-          <b-button type="submit" variant="primary">Submit</b-button>
+          <!-- display button if all new contact details are populated -->
+          <b-button
+            v-if="form.email && form.fullName"
+            variant="primary"
+            @click="attachContactToSeat"
+            >Select Seat Number</b-button
+          >
         </b-col>
       </b-row>
     </b-form>
@@ -61,10 +81,16 @@ export default {
   },
   methods: {
     ...mapMutations({ setContact: 'contacts/contacts/setContact' }),
+    hideContactForm() {
+      this.$emit('toggle-contact-form-visibility')
+    },
+    attachContactToSeat() {
+      this.$emit('attach-contact-to-seat', this.form.email)
+    },
     completeContactCreation() {
       this.setContact({ data: this.form, userId: this.userId })
       this.$emit('get-user-contacts')
-      this.$emit('toggle-contact-form-visibility')
+      this.hideContactForm()
     },
   },
 }

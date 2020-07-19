@@ -61,11 +61,13 @@ export default {
   methods: {
     ...mapMutations(['setUser']),
     login() {
+      this.$toast.info('Logging in...')
       this.users.forEach((user) => {
         if (
           user.email === this.form.email &&
           user.password === this.form.password
         ) {
+          this.$toast.success('Log in successful.')
           this.form.id = user.id
           parseInt(this.form.id)
           this.setUser(this.form)
@@ -75,7 +77,7 @@ export default {
           user.password !== this.form.password
         ) {
           // eslint-disable-next-line no-console
-          console.log('Password is incorrect')
+          this.$toast.error('Password is incorrect. Please Try again.')
         }
       })
     },

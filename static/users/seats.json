@@ -17,14 +17,10 @@
       ],
       "2": [
         {
-          "row": 2,
-          "col": 3,
-          "contact": "vee@gmail.com"
-        },
-        {
-          "row": 1,
-          "col": 4,
-          "contact": "vee@gmail.com"
+          "vee@gmail.com": {
+            "row": 2,
+            "col": 3
+          }
         }
       ]
     }

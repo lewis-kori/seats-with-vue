@@ -14,14 +14,16 @@ export const mutations = {
         const userContact = state.allContacts[0].userId[userId]
         if (userContact) {
           state.allContacts[0].userId[userId].push(data)
+          this.$toast.success('Contact created successfully.')
         }
       } else {
-        const userIdKey = { userIdString: [] }
-        state.allContacts.push({ userId: userIdKey })
+        const userIdKey = JSON.parse(`{ "userId": [] }`)
+        state.allContacts.push(userIdKey)
 
         state.allContacts[0].userId[userId] = []
         const user = state.allContacts[0].userId[userId]
         user.push(data)
+        this.$toast.success('Contact created successfully.')
       }
     }
   },

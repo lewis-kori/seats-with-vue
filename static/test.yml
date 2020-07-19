@@ -1,0 +1,38 @@
+<!-- <div
+                    v-if="
+                      Boolean(seat[contact.email]) &&
+                      coveredContacts.includes(contact.email)
+                    "
+                  >
+                    <Seat
+                      v-if="
+                        row === seat[contact.email].row &&
+                        col === seat[contact.email].col
+                      "
+                      :seat="{
+                        row: seat[contact.email].row,
+                        col: seat[contact.email].row,
+                        contact: contact.email,
+                      }"
+                    />
+                    <div
+                      v-else-if="
+                        !(row === seat[contact.email].row) &&
+                        !(col === seat[contact.email].col) &&
+                        coveredSeats.length >= 0
+                      "
+                    >
+                      <div>
+                        <Seat />
+                        <span @click="assignSeat(row, col)">select</span>
+                        col #{{ col }}
+                      </div>
+                    </div> -->
+
+                  <!-- <div v-else>
+                      <div>
+                        <Seat />
+                        <span @click="assignSeat(row, col)">select</span>
+                        col #{{ col }}
+                      </div>
+                    </div> -->
