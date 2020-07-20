@@ -47,6 +47,23 @@ Relevant getters and Mutations ensure the appropriate data gets to the frontend.
 
 This store contains the user's "room" settings. i.e number of rows and columns each user has.
 
+    ```
+    userId: {
+      '1': {
+        rows: 6,
+        cols: 6,
+      },
+      '2': {
+        rows: 7,
+        cols: 5,
+      },
+      '3': {
+        rows: 4,
+        cols: 5,
+      },
+    }
+    ```
+
 ### core.js
 
 Houses the all the seats in the system as well as a state that holds currently logged in user's seat allocation.

@@ -59,7 +59,7 @@
             </b-col>
           </b-row>
         </div>
-
+        <!-- display if the logged in user has no seats selected -->
         <div v-else>
           <b-row
             ><b-col class="text-center"
@@ -104,6 +104,7 @@
           </b-col>
         </b-row>
         <div v-if="contacts.length >= 0 && userSeats.length === 0">
+          <!-- prioritize empty seats first -->
           <b-row v-for="row in userRoom.rows" :key="row" class="mt-2">
             row #{{ row }}
             <b-col v-for="col in userRoom.cols" :key="col">
@@ -124,6 +125,7 @@
           <b-row v-for="row in userRoom.rows" :key="row" class="mt-2">
             row #{{ row }}
             <b-col v-for="col in userRoom.cols" :key="col">
+              <!-- ensure an occupied seat col has only one seat in the UI -->
               <div
                 v-if="
                   !occupiedSeats.some(
@@ -193,6 +195,7 @@
             </b-col>
           </b-row>
           <b-row class="mt-3 mb-4 text-center">
+            <!-- Adds a row to the currently logged in user' state in vuex -->
             <b-col class="m-auto">
               <b-button class="btn btn-lg btn-info" @click="addRow"
                 >Add Row</b-button

@@ -4,7 +4,6 @@
       <b-navbar-nav>
         <b-nav-item
           ><b-button
-            v-if="text === 'New Contact'"
             class="btn btn-primary"
             @click="toggleNewContactFormVisibility"
             >{{ text }}</b-button
