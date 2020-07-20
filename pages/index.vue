@@ -4,12 +4,12 @@
       <b-row>
         <b-col>
           <b-form-group
-            id="input-group-1"
+            ref="email-input"
             label="Email address:"
-            label-for="input-1"
+            label-for="email"
           >
             <b-form-input
-              ref="email-input"
+              ref="email"
               v-model="form.email"
               type="email"
               required
@@ -26,7 +26,7 @@
             label-for="password"
           >
             <b-form-input
-              id="password"
+              ref="password"
               v-model="form.password"
               type="password"
               required

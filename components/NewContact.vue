@@ -49,7 +49,7 @@
           <!-- display button if all new contact details are populated -->
           <b-button
             v-if="form.email && form.fullName"
-            variant="primary"
+            variant="info"
             @click="attachContactToSeat"
             >Select Seat Number</b-button
           >

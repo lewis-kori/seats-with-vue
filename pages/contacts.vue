@@ -119,6 +119,14 @@
               col #{{ col }}
             </b-col>
           </b-row>
+          <b-row class="mt-3 mb-4 text-center">
+            <!-- Adds a row to the currently logged in user' state in vuex -->
+            <b-col class="m-auto">
+              <b-button class="btn btn-lg btn-info" @click="addRow"
+                >Add Row</b-button
+              >
+            </b-col>
+          </b-row>
         </div>
 
         <div v-else-if="contacts.length >= 0 && userSeats.length > 0">
@@ -136,7 +144,7 @@
                 <div
                   v-if="row === selectedSeat.row && col === selectedSeat.col"
                 >
-                  <Seat :seat="selectedSeat" :text="'hello'" />
+                  <Seat :seat="selectedSeat" />
                 </div>
 
                 <div v-else>
@@ -173,6 +181,7 @@
                           col === seat[contact.email].col
                         "
                       >
+                        <!-- calls function to add the occupied seats(hidden element) -->
                         <span v-show="false">{{
                           occupiedSeats.push({
                             row: seat[contact.email].row,
