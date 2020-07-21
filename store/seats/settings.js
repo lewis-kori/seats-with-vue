@@ -23,7 +23,7 @@ export const mutations = {
   setUserRoom(state, userId) {
     state.userRoom = state.allRooms.userId[userId]
   },
-  addRow(state, userId) {
+  addRow(state) {
     state.userRoom.rows++
   },
 }

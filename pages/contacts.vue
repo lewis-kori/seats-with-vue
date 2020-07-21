@@ -314,9 +314,6 @@ export default {
     getUserContacts() {
       this.setUserContacts(this.loggedInUser.id)
     },
-    addRoomRow() {
-      this.addRow(this.loggedInUser.id)
-    },
     completeSeatAssignment() {
       // retrieve logged in user id
       const userId = this.loggedInUser.id
