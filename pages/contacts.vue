@@ -33,8 +33,8 @@
                       <!-- display if the user has seats -->
                       <div v-if="userSeats.length > 0">
                         <div
-                          v-for="seat in userSeats[0]"
-                          :key="seat[contact.email]"
+                          v-for="(seat, seatIndex) in userSeats[0]"
+                          :key="seatIndex"
                         >
                           <span>
                             <td v-if="Boolean(seat[contact.email])">
