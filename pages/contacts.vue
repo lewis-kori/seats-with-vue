@@ -182,12 +182,39 @@
                         "
                       >
                         <!-- calls function to add the occupied seats(hidden element) -->
-                        <span v-show="false">{{
-                          occupiedSeats.push({
-                            row: seat[contact.email].row,
-                            col: seat[contact.email].col,
-                          })
-                        }}</span>
+                        <span v-show="false">
+                          <!-- check if the occupied seats are populated -->
+                          <!-- had to go through this to fix the infinite update loop console error -->
+                          <span v-if="occupiedSeats.length > 0">
+                            <!-- if current seat is not already added to occupied seats array then add it  -->
+                            <span
+                              v-if="
+                                !occupiedSeats.some(
+                                  (chair) =>
+                                    chair.row === seat[contact.email].row &&
+                                    chair.col === seat[contact.email].col
+                                )
+                              "
+                              >{{
+                                occupiedSeats.push({
+                                  row: seat[contact.email].row,
+                                  col: seat[contact.email].col,
+                                })
+                              }}</span
+                            >
+                          </span>
+                          <!-- run for the first loop to populate the first occupied seat -->
+                          <span v-if="occupiedSeats.length === 0">
+                            <span>
+                              {{
+                                occupiedSeats.push({
+                                  row: seat[contact.email].row,
+                                  col: seat[contact.email].col,
+                                })
+                              }}
+                            </span>
+                          </span>
+                        </span>
                         <Seat
                           :seat="{
                             row: seat[contact.email].row,
