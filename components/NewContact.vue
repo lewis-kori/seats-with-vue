@@ -2,10 +2,10 @@
   <div class="mt-2 mb-3">
     <b-row class="mb-4">
       <b-col>
-        <b-button
+        <nuxt-link
           class="btn btn-sm btn-info float-left"
-          @click="hideContactForm"
-          >Close</b-button
+          :to="{ name: 'contacts' }"
+          >Close</nuxt-link
         >
         <b-button
           class="btn btn-sm btn-info float-right"
@@ -81,16 +81,16 @@ export default {
   },
   methods: {
     ...mapMutations({ setContact: 'contacts/contacts/setContact' }),
-    hideContactForm() {
-      this.$emit('toggle-contact-form-visibility')
-    },
     attachContactToSeat() {
       this.$emit('attach-contact-to-seat', this.form.email)
     },
     completeContactCreation() {
-      this.setContact({ data: this.form, userId: this.userId })
-      this.$emit('get-user-contacts')
-      this.hideContactForm()
+      // ensure form is filled
+      if (this.form.fullName && this.form.email) {
+        this.setContact({ data: this.form, userId: this.userId })
+        this.$router.push({ name: 'contacts' })
+      }
+      this.$toast.error('Fill in both email and full name please.')
     },
   },
 }
