@@ -54,7 +54,23 @@ export default {
     // Doc: https://bootstrap-vue.js.org
     'bootstrap-vue/nuxt',
     '@nuxtjs/pwa',
+    '@nuxtjs/toast',
   ],
+  // toast settings
+  toast: {
+    position: 'bottom-right',
+    duration: 3000,
+    register: [
+      // Register custom toasts
+      {
+        name: 'my_error',
+        message: 'Oops...Something went wrong',
+        options: {
+          type: 'error',
+        },
+      },
+    ],
+  },
   /*
    ** Build configuration
    ** See https://nuxtjs.org/api/configuration-build/

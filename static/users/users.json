@@ -1,0 +1,23 @@
+[
+    {
+        "id": 1,
+        "firstName": "Lewis",
+        "lastName": "Kori",
+        "email": "korikihiu@gmail.com",
+        "password": "newasd123"
+    },
+    {
+        "id": 2,
+        "firstName": "Kiran",
+        "lastName": "Sai",
+        "email":"sai@upwork.com",
+        "password": "123qwerty"
+    },
+    {
+        "id": 3,
+        "firstName": "Vannessa",
+        "lastName": "Dylan",
+        "email": "vee@outlook.com",
+        "password": "testPassword"
+    }
+]
