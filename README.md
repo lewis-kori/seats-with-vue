@@ -1,27 +1,6 @@
 # seats
 
-## Build Setup
-
-```bash
-# install dependencies
-$ yarn install
-
-# serve with hot reload at localhost:3000
-$ yarn dev
-
-# build for production and launch server
-$ yarn build
-$ yarn start
-
-# generate static project
-$ yarn generate
-```
-
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
-
-## User Seat Assignment
-
-### Overview
+## Overview
 
 Create a functional web application to create create contacts and assign them a seat number. The seat number is an object containing row and col. For example: following is the seat number at `0`th row and `1`st column.
 
@@ -42,3 +21,22 @@ Create a functional web application to create create contacts and assign them a 
 
 1. As an user, I should be able to create new contact and assign a free seat number.
 2. As an user, I should be able to view list of contacts along with assigned seat number.
+
+## Build Setup
+
+```bash
+# install dependencies
+$ yarn install
+
+# serve with hot reload at localhost:3000
+$ yarn dev
+
+# build for production and launch server
+$ yarn build
+$ yarn start
+
+# generate static project
+$ yarn generate
+```
+
+For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
